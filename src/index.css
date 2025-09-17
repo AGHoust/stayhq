@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Price Marker Styles */
+.price-marker {
+  background: white;
+  border: 2px solid #F06C3F;
+  border-radius: 20px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #F06C3F;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 50px;
+  text-align: center;
+}
+
+.price-marker:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.price-marker.highlighted {
+  background: #F06C3F;
+  color: white;
+  border-color: #F06C3F;
+  transform: scale(1.1);
+  z-index: 1000;
+}
+
+.price-marker.out-of-budget {
+  background: #f3f4f6;
+  color: #6b7280;
+  border-color: #d1d5db;
+}
+
+.price-marker.out-of-budget.highlighted {
+  background: #6b7280;
+  color: white;
+  border-color: #6b7280;
+}
+
+.custom-price-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Pin Marker Styles */
+.pin-marker {
+  background: white;
+  border: 3px solid var(--pin-color);
+  border-radius: 20px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--pin-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 60px;
+  text-align: center;
+  position: relative;
+}
+
+.pin-marker:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.pin-marker.highlighted {
+  background: var(--pin-color);
+  color: white;
+  transform: scale(1.15);
+  z-index: 1000;
+}
+
+.pin-label {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.pin-name {
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60px;
+}
+
+.custom-pin-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+:root {
+  --ink: #221F1C;        /* primary text */
+  --muted: #6C665E;      /* secondary text */
+  --surface: #FFF7F2;    /* warm app background */
+  --card: #FFFFFF;       /* cards */
+  --border: #F1E3D8;     /* soft borders/dividers */
+  
+  --petrol: #F06C3F;     /* PRIMARY (Apricot) — CTAs, primary buttons/links */
+  --ember: #86C8A8;      /* ACCENT (Pistachio) — chips, focus outlines */
+  --fig: #6D9F8A;        /* deeper pistachio for tags */
+  --fern: #3E7D5C;       /* success/availability */
+  --lastminute: #FF6A4D; /* urgent/last-minute ribbon */
+  --shadow: 0 10px 30px rgba(34,31,28,.10);
+}
+
+@keyframes softPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.soft-pulse {
+  animation: softPulse 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .soft-pulse {
+    animation: none;
+  }
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
