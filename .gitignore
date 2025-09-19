@@ -43,3 +43,4 @@ coverage/
 tmp/
 temp/
 data/listings.json
+public/listings.json
