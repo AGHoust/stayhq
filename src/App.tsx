@@ -2,8 +2,6 @@ import { useState } from 'react';
 import LandingPage from './components/LandingPage';
 import ListingPage from './components/ListingPage';
 import ComparePage from './components/ComparePage';
-import SearchResultsPage from './components/SearchResultsPage';
-import SmartSearchResultsPage from './components/SmartSearchResultsPage';
 import { Property } from './utils/types';
 import MTLListingsPage from './components/MTLListingsPage';
 import MTLListingDetail from './components/MTLListingDetail';
@@ -17,11 +15,9 @@ function isListing(item: CompareItem): item is Listing {
 }
 
 function App() {
-  const [currentView, setCurrentView] = useState<'landing' | 'listing' | 'compare' | 'mtl_list' | 'mtl_detail' | 'last_minute' | 'search_results' | 'smart_search_results'>('landing');
+  const [currentView, setCurrentView] = useState<'landing' | 'listing' | 'compare' | 'mtl_list' | 'mtl_detail' | 'last_minute'>('landing');
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
-  const [searchParams, setSearchParams] = useState<any>(null);
-  const [smartSearchParams, setSmartSearchParams] = useState<any>(null);
 
   console.log('🔄 App: Rendering with currentView:', currentView);
 
@@ -75,40 +71,15 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSearch = (params: any) => {
-    setSearchParams(params);
-    setCurrentView('search_results');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
-  const handleSmartSearch = (params: any) => {
-    console.log('🧠 App: Smart Search triggered with params:', params);
-    setSmartSearchParams(params);
-    setCurrentView('smart_search_results');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const backFromSearchResults = () => {
-    setCurrentView('landing');
-    setSearchParams(null);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const backFromSmartSearchResults = () => {
-    setCurrentView('landing');
-    setSmartSearchParams(null);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   return (
     <div className="min-h-screen bg-surface">
       {(() => { (window as any).openMTLList = openMTLList; (window as any).openLastMinute = openLastMinute; return null; })()}
       {currentView === 'landing' && (
         <LandingPage 
-          onPropertyClick={navigateToListing}
-          onNavigateToCompare={navigateToCompare}
-          onSearch={handleSearch}
-          onSmartSearch={handleSmartSearch}
+          onChooseMidLets={openMTLList}
+          onChooseLastMinute={openLastMinute}
         />
       )}
       {/* No floating Explore button per design */}
@@ -141,21 +112,6 @@ function App() {
         <MTLListingDetail listing={selectedListing} onBack={backFromMTLDetail} />
       )}
 
-      {currentView === 'search_results' && searchParams && (
-        <SearchResultsPage
-          searchParams={searchParams}
-          onBackToLanding={backFromSearchResults}
-          onPropertyClick={navigateToListing}
-        />
-      )}
-
-      {currentView === 'smart_search_results' && smartSearchParams && (
-        <SmartSearchResultsPage
-          searchParams={smartSearchParams}
-          onBackToLanding={backFromSmartSearchResults}
-          onPropertyClick={navigateToListing}
-        />
-      )}
     </div>
   );
 }

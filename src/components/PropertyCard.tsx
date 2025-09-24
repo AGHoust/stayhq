@@ -4,8 +4,8 @@ import type { Listing } from '@/lib/schemas/listing';
 import { getBadges } from '@/lib/badges';
 import { useCompareStore } from '../store/compareStore';
 import ListingQuickPreview from './ListingQuickPreview';
-import DistanceChips from './DistanceChips';
-import { Pin, DistanceResult } from '@/types/map';
+// import DistanceChips from './DistanceChips'; // COMMENTED OUT: Plan mode feature
+// import { Pin, DistanceResult } from '@/types/map'; // COMMENTED OUT: Plan mode types
 
 interface PropertyCardProps {
   property: Listing;
@@ -13,8 +13,9 @@ interface PropertyCardProps {
   showShortStayMode?: boolean;
   onPreview?: (listing: Listing) => void;
   onViewDetail?: (listing: Listing) => void;
-  pins?: Pin[];
-  distanceResults?: DistanceResult[];
+  // COMMENTED OUT: Plan mode props - keeping for future use
+  // pins?: Pin[];
+  // distanceResults?: DistanceResult[];
 }
 
 const PropertyCard: React.FC<PropertyCardProps> = ({ 
@@ -22,8 +23,9 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
   onClick,
   showShortStayMode = false,
   onViewDetail,
-  pins = [],
-  distanceResults = []
+  // COMMENTED OUT: Plan mode props - keeping for future use
+  // pins = [],
+  // distanceResults = []
 }) => {
   const [imageIndex, setImageIndex] = useState(0);
   const [showQuickPreview, setShowQuickPreview] = useState(false);
@@ -204,14 +206,14 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
           </div>
         </div>
 
-        {/* Distance Chips for Plan Mode */}
-        {pins.length > 0 && (
+        {/* COMMENTED OUT: Distance Chips for Plan Mode */}
+        {/* {pins.length > 0 && (
           <DistanceChips
             listingId={property.id}
             pins={pins}
             distanceResults={distanceResults}
           />
-        )}
+        )} */}
       </div>
 
 

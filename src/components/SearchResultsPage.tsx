@@ -5,8 +5,8 @@ import { listingToProperty } from '@/lib/compare-utils';
 import PropertyCard from './PropertyCard';
 import MapShell from './MapShell';
 import MobileMapView from './MobileMapView';
-import { Pin } from '@/types/map';
-import { calculateListingDistances, calculateOptimizedScore, sortByDistanceToPin, sortByOptimizedScore, formatDistance } from '@/utils/distance';
+// import { Pin } from '@/types/map'; // COMMENTED OUT: Plan mode types
+// import { calculateListingDistances, calculateOptimizedScore, sortByDistanceToPin, sortByOptimizedScore, formatDistance } from '@/utils/distance'; // COMMENTED OUT: Plan mode utilities
 import { MapURLState } from '@/utils/urlState';
 import { MapSessionState } from '@/utils/sessionState';
 
@@ -73,13 +73,13 @@ const SearchResultsPage: React.FC<SearchResultsPageProps> = ({
   const [highlightedListingId, setHighlightedListingId] = useState<string | null>(null);
   const [mapBounds, setMapBounds] = useState<any>(null);
   
-  // Plan mode state with URL/session persistence
-  const [pins, setPins] = useState<Pin[]>(() => {
-    const urlState = MapURLState.getCurrentMapState();
-    return urlState.pins || MapSessionState.loadPins();
-  });
-  const [planSortBy, setPlanSortBy] = useState<'optimized' | 'closest_to_A' | 'closest_to_B' | 'closest_to_C'>('optimized');
-  const [isDropPinMode, setIsDropPinMode] = useState(false);
+  // COMMENTED OUT: Plan mode state with URL/session persistence
+  // const [pins, setPins] = useState<Pin[]>(() => {
+  //   const urlState = MapURLState.getCurrentMapState();
+  //   return urlState.pins || MapSessionState.loadPins();
+  // });
+  // const [planSortBy, setPlanSortBy] = useState<'optimized' | 'closest_to_A' | 'closest_to_B' | 'closest_to_C'>('optimized');
+  // const [isDropPinMode, setIsDropPinMode] = useState(false);
   
   // Mobile state
   const [isMobile, setIsMobile] = useState(false);
@@ -91,9 +91,10 @@ const SearchResultsPage: React.FC<SearchResultsPageProps> = ({
     if (urlState.mode) {
       setMapMode(urlState.mode);
     }
-    if (urlState.pins) {
-      setPins(urlState.pins);
-    }
+    // COMMENTED OUT: Plan mode initialization
+    // if (urlState.pins) {
+    //   setPins(urlState.pins);
+    // }
     if (urlState.bounds) {
       setMapBounds(urlState.bounds);
     }
@@ -119,10 +120,11 @@ const SearchResultsPage: React.FC<SearchResultsPageProps> = ({
     MapURLState.updateURL({ mode: mapMode }, searchParams, true);
   }, [mapMode]);
 
-  useEffect(() => {
-    MapSessionState.savePins(pins);
-    MapURLState.updateURL({ pins }, searchParams, true);
-  }, [pins]);
+  // COMMENTED OUT: Plan mode persistence
+  // useEffect(() => {
+  //   MapSessionState.savePins(pins);
+  //   MapURLState.updateURL({ pins }, searchParams, true);
+  // }, [pins]);
 
   const pageSize = 12;
 
@@ -153,46 +155,46 @@ const SearchResultsPage: React.FC<SearchResultsPageProps> = ({
     console.log('Searching in bounds:', bounds.toString());
   };
 
-  // Plan mode functions
-  const handleAddPin = (pin: Pin) => {
-    setPins(prev => [...prev, pin]);
-  };
+  // COMMENTED OUT: Plan mode functions
+  // const handleAddPin = (pin: Pin) => {
+  //   setPins(prev => [...prev, pin]);
+  // };
 
-  const handleRemovePin = (pinId: string) => {
-    setPins(prev => prev.filter(pin => pin.id !== pinId));
-  };
+  // const handleRemovePin = (pinId: string) => {
+  //   setPins(prev => prev.filter(pin => pin.id !== pinId));
+  // };
 
-  const handleUpdatePin = (pinId: string, updates: Partial<Pin>) => {
-    setPins(prev => prev.map(pin => 
-      pin.id === pinId ? { ...pin, ...updates } : pin
-    ));
-  };
+  // const handleUpdatePin = (pinId: string, updates: Partial<Pin>) => {
+  //   setPins(prev => prev.map(pin => 
+  //     pin.id === pinId ? { ...pin, ...updates } : pin
+  //   ));
+  // };
 
-  const handleDropPin = () => {
-    setIsDropPinMode(true);
-    // TODO: Implement map click handler for dropping pins
-  };
+  // const handleDropPin = () => {
+  //   setIsDropPinMode(true);
+  //   // TODO: Implement map click handler for dropping pins
+  // };
 
-  const handleMapClick = (lat: number, lng: number) => {
-    if (isDropPinMode && pins.length < 3) {
-      const availableSlots = ['A', 'B', 'C'].filter(
-        slot => !pins.find(pin => pin.id === slot)
-      );
+  // const handleMapClick = (lat: number, lng: number) => {
+  //   if (isDropPinMode && pins.length < 3) {
+  //     const availableSlots = ['A', 'B', 'C'].filter(
+  //       slot => !pins.find(pin => pin.id === slot)
+  //     );
       
-      if (availableSlots.length > 0) {
-        const newPin: Pin = {
-          id: availableSlots[0] as 'A' | 'B' | 'C',
-          name: `Pin ${availableSlots[0]}`,
-          lat,
-          lng,
-          weight: 1
-        };
+  //     if (availableSlots.length > 0) {
+  //       const newPin: Pin = {
+  //         id: availableSlots[0] as 'A' | 'B' | 'C',
+  //         name: `Pin ${availableSlots[0]}`,
+  //         lat,
+  //         lng,
+  //         weight: 1
+  //       };
         
-        handleAddPin(newPin);
-        setIsDropPinMode(false);
-      }
-    }
-  };
+  //       handleAddPin(newPin);
+  //       setIsDropPinMode(false);
+  //     }
+  //   }
+  // };
   
   const filteredListings = useMemo(() => {
     if (loading) return [];
@@ -268,38 +270,38 @@ const SearchResultsPage: React.FC<SearchResultsPageProps> = ({
     return filtered;
   }, [allListings, searchParams, filters, loading, mapBounds]);
 
-  // Calculate distances for Plan mode
-  const distanceResults = useMemo(() => {
-    if (mapMode !== 'plan' || pins.length === 0) return [];
+  // COMMENTED OUT: Calculate distances for Plan mode
+  // const distanceResults = useMemo(() => {
+  //   if (mapMode !== 'plan' || pins.length === 0) return [];
     
-    return filteredListings.map(listing => {
-      const result = calculateListingDistances(listing, pins);
-      result.optimizedScore = calculateOptimizedScore(result.distances, pins);
-      return result;
-    });
-  }, [filteredListings, pins, mapMode]);
+  //   return filteredListings.map(listing => {
+  //     const result = calculateListingDistances(listing, pins);
+  //     result.optimizedScore = calculateOptimizedScore(result.distances, pins);
+  //     return result;
+  //   });
+  // }, [filteredListings, pins, mapMode]);
 
   // Sort listings
   const sortedListings = useMemo(() => {
     const sorted = [...filteredListings];
     
-    // Plan mode sorting
-    if (mapMode === 'plan' && pins.length > 0) {
-      switch (planSortBy) {
-        case 'optimized':
-          return sortByOptimizedScore(sorted, distanceResults);
-        case 'closest_to_A':
-          return sortByDistanceToPin(sorted, 'A', distanceResults);
-        case 'closest_to_B':
-          return sortByDistanceToPin(sorted, 'B', distanceResults);
-        case 'closest_to_C':
-          return sortByDistanceToPin(sorted, 'C', distanceResults);
-        default:
-          return sortByOptimizedScore(sorted, distanceResults);
-      }
-    }
+    // COMMENTED OUT: Plan mode sorting
+    // if (mapMode === 'plan' && pins.length > 0) {
+    //   switch (planSortBy) {
+    //     case 'optimized':
+    //       return sortByOptimizedScore(sorted, distanceResults);
+    //     case 'closest_to_A':
+    //       return sortByDistanceToPin(sorted, 'A', distanceResults);
+    //     case 'closest_to_B':
+    //       return sortByDistanceToPin(sorted, 'B', distanceResults);
+    //     case 'closest_to_C':
+    //       return sortByDistanceToPin(sorted, 'C', distanceResults);
+    //     default:
+    //       return sortByOptimizedScore(sorted, distanceResults);
+    //   }
+    // }
     
-    // Browse mode sorting
+    // Browse mode sorting (simplified - no Plan mode)
     switch (sortBy) {
       case 'price_low':
         sorted.sort((a, b) => a.monthly_rent - b.monthly_rent);
@@ -334,7 +336,7 @@ const SearchResultsPage: React.FC<SearchResultsPageProps> = ({
     }
 
     return sorted;
-  }, [filteredListings, sortBy, mapMode, pins, planSortBy, distanceResults]);
+  }, [filteredListings, sortBy]); // COMMENTED OUT: Plan mode dependencies
 
   // Pagination
   const totalPages = Math.ceil(sortedListings.length / pageSize);
@@ -462,7 +464,8 @@ const SearchResultsPage: React.FC<SearchResultsPageProps> = ({
             
             <div className="flex items-center gap-2">
               <span className="text-sm text-petrol/70 font-medium">Sort by:</span>
-              {mapMode === 'plan' && pins.length > 0 ? (
+              {/* COMMENTED OUT: Plan mode sorting options */}
+              {/* {mapMode === 'plan' && pins.length > 0 ? (
                 <select
                   value={planSortBy}
                   onChange={(e) => setPlanSortBy(e.target.value as any)}
@@ -473,7 +476,7 @@ const SearchResultsPage: React.FC<SearchResultsPageProps> = ({
                   {pins.find(pin => pin.id === 'B') && <option value="closest_to_B">Closest to B</option>}
                   {pins.find(pin => pin.id === 'C') && <option value="closest_to_C">Closest to C</option>}
                 </select>
-              ) : (
+              ) : ( */}
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as any)}
@@ -486,7 +489,7 @@ const SearchResultsPage: React.FC<SearchResultsPageProps> = ({
                   <option value="rating">Highest rated</option>
                   <option value="newest">Newest listings</option>
                 </select>
-              )}
+              {/* )} */}
             </div>
           </div>
         </div>
@@ -643,8 +646,9 @@ const SearchResultsPage: React.FC<SearchResultsPageProps> = ({
                     onClick={() => onPropertyClick(listingToProperty(listing))}
                     onPreview={() => onPropertyClick(listingToProperty(listing))}
                     onViewDetail={(listing) => onPropertyClick(listingToProperty(listing))}
-                    pins={mapMode === 'plan' ? pins : undefined}
-                    distanceResults={mapMode === 'plan' ? distanceResults : undefined}
+                    // COMMENTED OUT: Plan mode props
+                    // pins={mapMode === 'plan' ? pins : undefined}
+                    // distanceResults={mapMode === 'plan' ? distanceResults : undefined}
                   />
                 </div>
               ))}
@@ -908,8 +912,8 @@ const SearchResultsPage: React.FC<SearchResultsPageProps> = ({
         </div>
       </FilterDrawer>
 
-      {/* Mobile Map View */}
-      {isMobile && showMobileMap && (
+      {/* COMMENTED OUT: Mobile Map View with Plan mode */}
+      {/* {isMobile && showMobileMap && (
         <MobileMapView
           listings={paginatedListings.map(listing => ({
             id: listing.id,
@@ -933,7 +937,7 @@ const SearchResultsPage: React.FC<SearchResultsPageProps> = ({
           isDropPinMode={isDropPinMode}
           distanceResults={distanceResults}
         />
-      )}
+      )} */}
     </div>
   );
 };

@@ -630,14 +630,14 @@ const AvailabilitySlider: React.FC<AvailabilitySliderProps> = ({
           {currentMonthLabel && (
             <div className="absolute top-0 left-0 z-10 bg-white px-3 py-1 rounded-b-lg border border-gray-200 shadow-sm">
               <span className="text-sm font-semibold text-gray-700">{currentMonthLabel}</span>
-            </div>
+        </div>
           )}
-          
-          <div 
-            ref={sliderRef}
+
+        <div 
+          ref={sliderRef}
             className="flex gap-1 overflow-x-auto pb-4 scrollbar-hide pt-8"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
             {calendarData.map((dayData, dayIndex) => {
               // Determine week grouping for alternating background
               const weekNumber = Math.floor(dayIndex / 7);
@@ -645,15 +645,15 @@ const AvailabilitySlider: React.FC<AvailabilitySliderProps> = ({
               
               return (
                 <div key={dayIndex} className="flex-shrink-0 relative group">
-                  <button
-                    onClick={() => handleDateClick(dayData.date)}
+              <button
+                onClick={() => handleDateClick(dayData.date)}
                     onMouseDown={() => handleMouseDown(dayData.date)}
                     onMouseEnter={() => handleMouseEnter(dayData.date)}
                     onMouseUp={handleMouseUp}
-                    disabled={dayData.isPast || !dayData.isAvailable}
-                    className={`
+                disabled={dayData.isPast || !dayData.isAvailable}
+                className={`
                       w-12 h-12 rounded-lg text-sm font-bold transition-all duration-200 flex flex-col items-center justify-center relative
-                      ${dayData.isPast || !dayData.isAvailable
+                  ${dayData.isPast || !dayData.isAvailable
                         ? 'text-gray-400 cursor-not-allowed bg-gray-100'
                         : 'cursor-pointer hover:scale-105'
                       }
@@ -661,9 +661,9 @@ const AvailabilitySlider: React.FC<AvailabilitySliderProps> = ({
                         ? 'bg-petrol text-white border-2 border-petrol shadow-lg'
                         : dayData.isSelected
                         ? 'bg-petrol text-white border-2 border-petrol'
-                        : dayData.isToday
+                    : dayData.isToday
                         ? 'bg-fern text-white border-2 border-fern shadow-md'
-                        : dayData.isAvailable
+                    : dayData.isAvailable
                         ? 'bg-green-100 text-gray-900 border border-green-300 hover:bg-green-200'
                         : 'bg-gray-200 text-gray-400'
                       }
@@ -692,7 +692,7 @@ const AvailabilitySlider: React.FC<AvailabilitySliderProps> = ({
                     {dayData.isToday && !dayData.isSelected && (
                       <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-orange rounded-full"></div>
                     )}
-                  </button>
+              </button>
                   
                   {/* Week separator line */}
                   {dayIndex % 7 === 6 && dayIndex < calendarData.length - 1 && (
@@ -702,7 +702,7 @@ const AvailabilitySlider: React.FC<AvailabilitySliderProps> = ({
               );
             })}
           </div>
-        </div>
+            </div>
 
         {/* Scroll indicator */}
         <div className="w-full h-1 bg-gray-200 rounded-full mt-4 overflow-hidden">

@@ -2,6 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Soft pulse animation with reduced motion support */
+@keyframes soft-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+.soft-pulse {
+  animation: soft-pulse 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .soft-pulse {
+    animation: none;
+  }
+  
+  .animate-pulse {
+    animation: none;
+  }
+  
+  /* Disable hover transforms for reduced motion */
+  .group:hover {
+    transform: none !important;
+  }
+  
+  .hover\:-translate-y-1:hover {
+    transform: none !important;
+  }
+}
+
 /* Price Marker Styles */
 .price-marker {
   background: white;

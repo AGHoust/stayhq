@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Pin, DistanceResult } from '@/types/map';
+// import { Pin, DistanceResult } from '@/types/map'; // COMMENTED OUT: Plan mode types
 
 // Fix for default markers in react-leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -22,14 +22,15 @@ interface Listing {
 
 interface ResultsMapProps {
   listings: Listing[];
-  mode: 'browse' | 'plan';
+  mode: 'browse' | 'plan'; // COMMENTED OUT: Plan mode - keeping for future use
   onMapMove: (bounds: any) => void;
   highlightedListingId?: string;
   onListingHover: (listingId: string | null) => void;
-  pins?: Pin[];
-  onMapClick?: (lat: number, lng: number) => void;
-  isDropPinMode?: boolean;
-  distanceResults?: DistanceResult[];
+  // COMMENTED OUT: Plan mode props - keeping for future use
+  // pins?: Pin[];
+  // onMapClick?: (lat: number, lng: number) => void;
+  // isDropPinMode?: boolean;
+  // distanceResults?: DistanceResult[];
 }
 
 // Component to handle map events
@@ -62,10 +63,11 @@ const ResultsMap: React.FC<ResultsMapProps> = ({
   onMapMove,
   highlightedListingId,
   onListingHover,
-  pins = [],
-  onMapClick,
-  isDropPinMode = false,
-  distanceResults = []
+  // COMMENTED OUT: Plan mode props - keeping for future use
+  // pins = [],
+  // onMapClick,
+  // isDropPinMode = false,
+  // distanceResults = []
 }) => {
   const mapRef = useRef<L.Map>(null);
 
@@ -143,8 +145,8 @@ const ResultsMap: React.FC<ResultsMapProps> = ({
             );
           })}
 
-        {/* Render pin markers for Plan mode */}
-        {mode === 'plan' && pins.map((pin) => {
+        {/* COMMENTED OUT: Render pin markers for Plan mode */}
+        {/* {mode === 'plan' && pins.map((pin) => {
           const pinMarkerHtml = `
             <div class="pin-marker" style="--pin-color: ${
               pin.id === 'A' ? '#ef4444' :
@@ -182,7 +184,7 @@ const ResultsMap: React.FC<ResultsMapProps> = ({
               </Popup>
             </Marker>
           );
-        })}
+        })} */}
       </MapContainer>
     </div>
   );

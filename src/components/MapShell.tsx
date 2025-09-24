@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Map, Search, List, Maximize2 } from 'lucide-react';
 import ResultsMap from './ResultsMap';
-import PinDock from './PinDock';
-import { Pin, DistanceResult } from '@/types/map';
+// import PinDock from './PinDock'; // COMMENTED OUT: Plan mode feature
+// import { Pin, DistanceResult } from '@/types/map'; // COMMENTED OUT: Plan mode types
 
 interface Listing {
   id: string;
@@ -14,21 +14,22 @@ interface Listing {
 
 interface MapShellProps {
   listings: Listing[];
-  mode: 'browse' | 'plan';
+  mode: 'browse' | 'plan'; // COMMENTED OUT: Plan mode - keeping for future use
   onModeChange: (mode: 'browse' | 'plan') => void;
   onSearchThisArea: (bounds: any) => void;
   onShowList: () => void;
   onOpenFullMap: () => void;
   highlightedListingId?: string;
   onListingHover: (listingId: string | null) => void;
-  pins?: Pin[];
-  onAddPin?: (pin: Pin) => void;
-  onRemovePin?: (pinId: string) => void;
-  onUpdatePin?: (pinId: string, updates: Partial<Pin>) => void;
-  onDropPin?: () => void;
-  onMapClick?: (lat: number, lng: number) => void;
-  isDropPinMode?: boolean;
-  distanceResults?: DistanceResult[];
+  // COMMENTED OUT: Plan mode props - keeping for future use
+  // pins?: Pin[];
+  // onAddPin?: (pin: Pin) => void;
+  // onRemovePin?: (pinId: string) => void;
+  // onUpdatePin?: (pinId: string, updates: Partial<Pin>) => void;
+  // onDropPin?: () => void;
+  // onMapClick?: (lat: number, lng: number) => void;
+  // isDropPinMode?: boolean;
+  // distanceResults?: DistanceResult[];
 }
 
 const MapShell: React.FC<MapShellProps> = ({
@@ -40,14 +41,15 @@ const MapShell: React.FC<MapShellProps> = ({
   onOpenFullMap,
   highlightedListingId,
   onListingHover,
-  pins = [],
-  onAddPin,
-  onRemovePin,
-  onUpdatePin,
-  onDropPin,
-  onMapClick,
-  isDropPinMode = false,
-  distanceResults = []
+  // COMMENTED OUT: Plan mode props - keeping for future use
+  // pins = [],
+  // onAddPin,
+  // onRemovePin,
+  // onUpdatePin,
+  // onDropPin,
+  // onMapClick,
+  // isDropPinMode = false,
+  // distanceResults = []
 }) => {
   const [showSearchArea, setShowSearchArea] = useState(false);
   const [mapBounds, setMapBounds] = useState<any>(null);
@@ -69,8 +71,8 @@ const MapShell: React.FC<MapShellProps> = ({
       {/* Map Header */}
       <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white">
         <div className="flex items-center space-x-4">
-          {/* Mode Toggle */}
-          <div className="flex bg-gray-100 rounded-lg p-1">
+          {/* Mode Toggle - COMMENTED OUT: Plan mode feature */}
+          {/* <div className="flex bg-gray-100 rounded-lg p-1">
             <button
               onClick={() => onModeChange('browse')}
               className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
@@ -93,6 +95,12 @@ const MapShell: React.FC<MapShellProps> = ({
               <Search className="w-4 h-4 inline mr-1.5" />
               Plan around a place
             </button>
+          </div> */}
+          
+          {/* Simplified header for Browse mode only */}
+          <div className="flex items-center gap-2">
+            <Map className="w-5 h-5 text-petrol" />
+            <span className="font-medium text-petrol">Browse Properties</span>
           </div>
         </div>
 
@@ -136,14 +144,15 @@ const MapShell: React.FC<MapShellProps> = ({
           onMapMove={handleMapMove}
           highlightedListingId={highlightedListingId}
           onListingHover={onListingHover}
-          pins={pins}
-          onMapClick={onMapClick}
-          isDropPinMode={isDropPinMode}
-          distanceResults={distanceResults}
+          // COMMENTED OUT: Plan mode props - keeping for future use
+          // pins={pins}
+          // onMapClick={onMapClick}
+          // isDropPinMode={isDropPinMode}
+          // distanceResults={distanceResults}
         />
         
-        {/* PinDock for Plan mode */}
-        {mode === 'plan' && onAddPin && onRemovePin && onUpdatePin && onDropPin && (
+        {/* COMMENTED OUT: PinDock for Plan mode */}
+        {/* {mode === 'plan' && onAddPin && onRemovePin && onUpdatePin && onDropPin && (
           <div className="absolute top-4 left-4 z-10 max-w-sm">
             <PinDock
               pins={pins}
@@ -153,7 +162,7 @@ const MapShell: React.FC<MapShellProps> = ({
               onDropPin={onDropPin}
             />
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
